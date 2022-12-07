@@ -1,0 +1,40 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<p>Welcome, {{request.user}}!</p>
+<a class="links" href="{% url 'logout' %}"><button type="button" class="btn btn-dark">Logout</button></a>
+{% else%}
+<a class="links" href="{% url 'login' %}">Login</a>
+{% endif %}
+
+<hr class="hr">
+<h1>My To Do List {{color}}</h1>
+<form method="GET">
+    <input type="text" name="search-area" value="{{ search_input }}">
+    <input type="submit" value="Search">
+</form>
+<div class="add"><a href="{% url 'task-create' %}"><button type="button" class="btn btn-secondary">Add Item</button></a></div>
+
+<div class="content_body">
+
+    <h3>Item(s)</h3>
+    {% for task in tasks %}
+
+    <div class="listy">
+        <div class="title">{{task.title}}</div>
+
+        <div class="btns">
+            <a class="links" href="{% url 'task-update' task.id %}"><button type="button"
+                    class="btn btn-warning">Edit</button></a>
+            <a class="links" href="{% url 'task-delete' task.id %}"><button type="button"
+                    class="btn btn-danger">Delete</button></a>
+        </div>
+    </div>
+
+    {% empty %}
+    <h4>No item in list</h4>
+    {% endfor %}
+</div>
+
+{% endblock content %}

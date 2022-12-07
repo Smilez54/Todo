@@ -1,0 +1,29 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+
+<div class="heading"><h1>Login</h1></div>
+<div class="hr"></div>
+<form method="POST" class="formy">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="label">
+        <div class="tlabel">{{ field.label }}: </div>
+        <div class="llabel">{{ field }}</div>
+        {% for error in field.errors %}
+        <small style="color:red">{{ error }}</small>
+        {% endfor %}
+    </div>
+
+    {% endfor %}
+    <div class="submit">
+        <button type="submit" class="btn btn-success">Login</button>
+    </div>
+</form>
+
+
+<div class="refer">
+    <h6>Don't have an account?<a class="links" href="{% url 'register' %}"><button type="button"
+                class="btn btn-outline-danger btn-sm small">Register</button></a>here</h6>
+</div>
+
+{% endblock %}
